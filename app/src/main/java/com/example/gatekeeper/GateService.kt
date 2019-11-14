@@ -18,14 +18,18 @@ class GateService {
 
     val csfrToken = "csrftoken"
     val csrfMiddlewareToken = "csrfmiddlewaretoken"
+    val sessionId = "sessionid"
 
     fun openGate(number: Int, rootView : View, context : Context){
 
         val gate = Gate(number)
 
+        val sharedPreference = SharedPreference(context)
 
         val service = RetrofitInstance.getRetrofitService()
-        val call = service.postGateNumber("sessionid=znk8h1038vs9676krnuy6e5d0qwav39",gate)
+        //TODO
+//        val call = service.postGateNumber("sessionid=znk8h1038vs9676krnuy6e5d0qwav39",gate)
+        val call = service.postGateNumber(sharedPreference.getValueString(sessionId).toString(),gate)
 
         Log.wtf("URL Called", call.request().url().toString() + "")
         Log.wtf("Header Cookie Called", call.request().header("Cookie").toString() + "")
@@ -100,6 +104,7 @@ class GateService {
                         println(message = "Status code: $code")
 
                         //get csrftoken
+                        var inputCsrfToken =""
                         val cookies = listOf(response.headers().get("Set-Cookie"))
                         println(message = "All cookies: $cookies")
                         cookies?.forEach {
@@ -107,6 +112,7 @@ class GateService {
                                 val c = it.toString().split(";")[0]
                                 println("Save csrftoken pref: $c")
                                 sharedPreference.save(csfrToken,c)
+                                inputCsrfToken = c
 
                             }
 
@@ -117,14 +123,18 @@ class GateService {
                         //println(message = "Html: $html")
                         val document = Jsoup.parse(html)
                         val inputCsrfmiddlewaretoken = document.getElementsByAttributeValue("name","csrfmiddlewaretoken").attr("value")
-                        println(message = "Save $csrfMiddlewareToken pref: $csrfMiddlewareToken=$inputCsrfmiddlewaretoken")
-                        sharedPreference.save(csrfMiddlewareToken,"$csrfMiddlewareToken=$inputCsrfmiddlewaretoken")
+                        println(message = "Save $csrfMiddlewareToken pref: $inputCsrfmiddlewaretoken")
+                        sharedPreference.save(csrfMiddlewareToken, inputCsrfmiddlewaretoken)
 
                         //println(message = "Saved: "+sharedPreference.getValueString(csfrToken))
                         //println(message = "Saved: "+sharedPreference.getValueString(csrfMiddlewareToken))
 
                         //TODO login
+                        login(context,inputCsrfmiddlewaretoken,inputCsrfToken)
 
+                    }
+                    code==403 -> {
+                        println(message = "Status code $code (Forbidden)")
                     }
                     else -> {
                         println(message = "Status code $code")
@@ -135,4 +145,55 @@ class GateService {
 
         })
     }
+
+    fun login(context : Context, csrfmiddlewaretoken : String, csrftoken : String){
+        val service = RetrofitInstance.getRetrofitService()
+
+        //TODO
+        val call = service.postLoginFormData(csrftoken,"ruzicka","ders.147",csrfmiddlewaretoken)
+
+        Log.wtf("URL Called", call.request().url().toString() + "")
+
+        call.enqueue(object : Callback<ResponseBody>{
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                println(message = "Error: "+t.message + "; cause: " + t.cause)
+            }
+
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+
+                val sharedPreference = SharedPreference(context)
+
+                val code = response.code()
+
+                when {
+                    response.isSuccessful -> {
+
+                        println(message = "Status code: $code")
+
+                        //get csrftoken
+                        val cookies = listOf(response.headers().get("Set-Cookie"))
+                        println(message = "All cookies: $cookies")
+                        cookies?.forEach {
+                            if(it.toString().contains("csrftoken=")){
+                                val c = it.toString().split(";")[0]
+                                println("Save csrftoken pref: $c")
+                                sharedPreference.save(csfrToken,c)
+                            }
+                            if(it.toString().contains("sessionid=")){
+                                val c = it.toString().split(";")[0]
+                                println("Save sessionid pref: $c")
+                                sharedPreference.save(sessionId,c)
+                            }
+                        }
+                    }
+                    else -> {
+                        println(message = "Status code $code")
+                    }
+                }
+
+            }
+
+        })
+    }
+
 }

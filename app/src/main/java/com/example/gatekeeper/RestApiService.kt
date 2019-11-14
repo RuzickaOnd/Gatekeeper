@@ -8,7 +8,12 @@ interface RestApiService {
 
     @Headers("Content-Type: application/json")
     @POST("gateapi/")
-    fun postGateNumber(@Header("Cookie") sessionId: String, @Body body: Gate): Call<String>
+    fun postGateNumber(@Header("Cookie") sessionid: String, @Body body: Gate): Call<String>
+
+    @Headers("Referer: https://gatekeeper.ders.cz/accounts/login/")
+    @FormUrlEncoded
+    @POST("accounts/login/")
+    fun postLoginFormData(@Header("Cookie") csrftoken: String, @Field("username") username : String, @Field("password") password : String, @Field("csrfmiddlewaretoken") csrfmiddlewaretoken : String) : Call<ResponseBody>
 
     @GET("gatekeeper/")
     fun getGateTarget() : Call <ResponseBody>
