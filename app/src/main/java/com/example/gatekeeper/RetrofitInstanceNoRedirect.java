@@ -8,22 +8,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
-public class RetrofitInstance {
+public class RetrofitInstanceNoRedirect {
 
     private static Retrofit retrofit;
     private static final String BASE_URL = "https://gatekeeper.ders.cz/";
     private static RestApiService service;
 
-    public static Retrofit getRetrofitInstance() {
+    public static Retrofit getRetrofitInstanceNoRedirect() {
 
         if (retrofit == null) {
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .serializeNulls()
                     .create();
-//            OkHttpClient client = new OkHttpClient.Builder().build(); //new OkHttpClient();
+
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            //builder.followRedirects(false);
+            builder.followRedirects(false);
             OkHttpClient client = builder.build();
 
 
@@ -38,7 +38,7 @@ public class RetrofitInstance {
     }
 
     public static RestApiService getRetrofitService(){
-        service = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
+        service = RetrofitInstanceNoRedirect.getRetrofitInstanceNoRedirect().create(RestApiService.class);
         return service;
     }
 }
