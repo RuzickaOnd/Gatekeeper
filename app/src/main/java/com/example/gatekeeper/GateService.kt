@@ -60,9 +60,9 @@ class GateService {
                         }else{
                             println(message = "Authorization Failed")
                             Snackbar.make(rootView,"Authorization Failed", Snackbar.LENGTH_SHORT).show()
-                            getCsrfTokenFromGate(context)
                         }
-
+                        //retry login
+                        getCsrfTokenFromGate(rootView, context)
                     }
                     code==400 -> {
                         println(message = "Status code $code (Bad request)")
@@ -79,7 +79,7 @@ class GateService {
         })
     }
 
-    fun getCsrfTokenFromGate(context : Context){
+    fun getCsrfTokenFromGate(rootView : View, context : Context){
         val service = RetrofitInstance.getRetrofitService()
         val call = service.getGateTarget()
 
@@ -107,7 +107,6 @@ class GateService {
                         val headerMapList : Map<String, List<String>> = headerResponse.toMultimap()
                         val allCookies : List<String> = headerMapList["Set-Cookie"] ?: emptyList()
                         //val cookies = listOf(response.headers().get("Set-Cookie"))
-
                         allCookies.forEach {
                             if(it.contains("csrftoken=")){
                                 val c = it.split(";")[0]
@@ -127,14 +126,17 @@ class GateService {
                         println(message = "Save $csrfMiddlewareToken pref: $inputCsrfmiddlewaretoken")
                         sharedPreference.save(csrfMiddlewareToken, inputCsrfmiddlewaretoken)
 
-                        login(context,inputCsrfmiddlewaretoken,inputCsrfToken)
+                        //call login
+                        login(rootView, context,inputCsrfmiddlewaretoken,inputCsrfToken)
 
                     }
                     code==403 -> {
                         println(message = "Status code $code (Forbidden)")
+                        Snackbar.make(rootView,"Status code $code (Forbidden)", Snackbar.LENGTH_SHORT).show()
                     }
                     else -> {
                         println(message = "Status code $code")
+                        Snackbar.make(rootView,"Status code $code", Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
@@ -143,7 +145,7 @@ class GateService {
         })
     }
 
-    fun login(context : Context, csrfmiddlewaretoken : String, csrftoken : String){
+    fun login(rootView : View, context : Context, csrfmiddlewaretoken : String, csrftoken : String){
         val service = RetrofitInstanceNoRedirect.getRetrofitService()
 
         //TODO
@@ -163,14 +165,9 @@ class GateService {
                 val code = response.code()
 
                 when {
-                    response.isSuccessful -> {
+                    response.isSuccessful || code==302 -> {
 
                         println(message = "Status code: $code")
-
-                    }
-                    code==302 ->{
-                        println(message = "Status code: $code")
-
 
                         val headerResponse : Headers = response.headers()
                         val headerMapList : Map<String, List<String>> = headerResponse.toMultimap()
@@ -182,6 +179,8 @@ class GateService {
                                 val s = it.split(";")[0]
                                 println("Save sessionid pref: $s")
                                 sharedPreference.save(sessionId,s)
+
+                                if(s.isNotEmpty()) Snackbar.make(rootView,"Login Success", Snackbar.LENGTH_SHORT).show()
                             }
                             if(it.contains("csrftoken=")){
                                 val c = it.split(";")[0]
@@ -189,9 +188,11 @@ class GateService {
                                 sharedPreference.save(csfrToken,c)
                             }
                         }
+
                     }
                     else -> {
                         println(message = "Status code $code")
+                        Snackbar.make(rootView,"Status code $code => Login Failed", Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
