@@ -4,14 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.View
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
+import okhttp3.Headers
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Element
-import org.jsoup.select.Elements
 
 
 class GateService {
@@ -27,7 +25,7 @@ class GateService {
         val sharedPreference = SharedPreference(context)
 
         val service = RetrofitInstance.getRetrofitService()
-        //TODO
+
 //        val call = service.postGateNumber("sessionid=znk8h1038vs9676krnuy6e5d0qwav39",gate)
         val call = service.postGateNumber(sharedPreference.getValueString(sessionId).toString(),gate)
 
@@ -60,9 +58,9 @@ class GateService {
                             println(message = "Status code $code (Forbidden)")
                             Snackbar.make(rootView,"Status code $code (Forbidden)", Snackbar.LENGTH_SHORT).show()
                         }else{
-                            getCsrfTokenFroomGate(context)
                             println(message = "Authorization Failed")
                             Snackbar.make(rootView,"Authorization Failed", Snackbar.LENGTH_SHORT).show()
+                            getCsrfTokenFromGate(context)
                         }
 
                     }
@@ -81,7 +79,7 @@ class GateService {
         })
     }
 
-    fun getCsrfTokenFroomGate(context : Context){
+    fun getCsrfTokenFromGate(context : Context){
         val service = RetrofitInstance.getRetrofitService()
         val call = service.getGateTarget()
 
@@ -105,11 +103,14 @@ class GateService {
 
                         //get csrftoken
                         var inputCsrfToken =""
-                        val cookies = listOf(response.headers().get("Set-Cookie"))
-                        println(message = "All cookies: $cookies")
-                        cookies?.forEach {
-                            if(it.toString().contains("csrftoken=")){
-                                val c = it.toString().split(";")[0]
+                        val headerResponse : Headers = response.headers()
+                        val headerMapList : Map<String, List<String>> = headerResponse.toMultimap()
+                        val allCookies : List<String> = headerMapList["Set-Cookie"] ?: emptyList()
+                        //val cookies = listOf(response.headers().get("Set-Cookie"))
+
+                        allCookies.forEach {
+                            if(it.contains("csrftoken=")){
+                                val c = it.split(";")[0]
                                 println("Save csrftoken pref: $c")
                                 sharedPreference.save(csfrToken,c)
                                 inputCsrfToken = c
@@ -126,10 +127,6 @@ class GateService {
                         println(message = "Save $csrfMiddlewareToken pref: $inputCsrfmiddlewaretoken")
                         sharedPreference.save(csrfMiddlewareToken, inputCsrfmiddlewaretoken)
 
-                        //println(message = "Saved: "+sharedPreference.getValueString(csfrToken))
-                        //println(message = "Saved: "+sharedPreference.getValueString(csrfMiddlewareToken))
-
-                        //TODO login
                         login(context,inputCsrfmiddlewaretoken,inputCsrfToken)
 
                     }
@@ -147,7 +144,7 @@ class GateService {
     }
 
     fun login(context : Context, csrfmiddlewaretoken : String, csrftoken : String){
-        val service = RetrofitInstance.getRetrofitService()
+        val service = RetrofitInstanceNoRedirect.getRetrofitService()
 
         //TODO
         val call = service.postLoginFormData(csrftoken,"ruzicka","ders.147",csrfmiddlewaretoken)
@@ -170,19 +167,26 @@ class GateService {
 
                         println(message = "Status code: $code")
 
-                        //get csrftoken
-                        val cookies = listOf(response.headers().get("Set-Cookie"))
-                        println(message = "All cookies: $cookies")
-                        cookies?.forEach {
-                            if(it.toString().contains("csrftoken=")){
-                                val c = it.toString().split(";")[0]
+                    }
+                    code==302 ->{
+                        println(message = "Status code: $code")
+
+
+                        val headerResponse : Headers = response.headers()
+                        val headerMapList : Map<String, List<String>> = headerResponse.toMultimap()
+                        val allCookies : List<String> = headerMapList["Set-Cookie"] ?: emptyList()
+                        allCookies.forEach{
+                            println(message = "One of all cookies: $it")
+
+                            if(it.contains("sessionid=")){
+                                val s = it.split(";")[0]
+                                println("Save sessionid pref: $s")
+                                sharedPreference.save(sessionId,s)
+                            }
+                            if(it.contains("csrftoken=")){
+                                val c = it.split(";")[0]
                                 println("Save csrftoken pref: $c")
                                 sharedPreference.save(csfrToken,c)
-                            }
-                            if(it.toString().contains("sessionid=")){
-                                val c = it.toString().split(";")[0]
-                                println("Save sessionid pref: $c")
-                                sharedPreference.save(sessionId,c)
                             }
                         }
                     }
