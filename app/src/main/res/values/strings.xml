@@ -15,6 +15,7 @@
     <string name="username_title">Username</string>
     <string name="password_title">Password</string>
     <string name="passShow_title">Show password</string>
+    <string name="clearSession_title">Clear session</string>
 
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>

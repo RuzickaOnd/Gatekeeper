@@ -3,6 +3,7 @@ package com.example.gatekeeper
 import android.content.Context
 import android.util.Log
 import android.view.View
+import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.Headers
 import okhttp3.ResponseBody
@@ -26,7 +27,6 @@ class GateService {
 
         val service = RetrofitInstance.getRetrofitService()
 
-//        val call = service.postGateNumber("sessionid=znk8h1038vs9676krnuy6e5d0qwav39",gate)
         val call = service.postGateNumber(sharedPreference.getValueString(sessionId).toString(),gate)
 
         Log.wtf("URL Called", call.request().url().toString() + "")
@@ -55,11 +55,11 @@ class GateService {
                     }
                     code==403 -> {
                         if(number>0){
-                            println(message = "Status code $code (Forbidden)")
+                            println(message = "Status code $code (Forbidden) ... trying again")
                             Snackbar.make(rootView,"Status code $code (Forbidden)", Snackbar.LENGTH_SHORT).show()
                         }else{
                             println(message = "Authorization Failed")
-                            Snackbar.make(rootView,"Authorization Failed", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(rootView,"Authorization Failed ... trying again", Snackbar.LENGTH_SHORT).show()
                         }
                         //retry login
                         getCsrfTokenFromGate(rootView, context)
@@ -148,8 +148,10 @@ class GateService {
     fun login(rootView : View, context : Context, csrfmiddlewaretoken : String, csrftoken : String){
         val service = RetrofitInstanceNoRedirect.getRetrofitService()
 
-        //TODO
-        val call = service.postLoginFormData(csrftoken,"ruzicka","ders.147",csrfmiddlewaretoken)
+        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+        val username = prefs.getString("username","") ?: ""
+        val password = prefs.getString("password","") ?: ""
+        val call = service.postLoginFormData(csrftoken,username,password,csrfmiddlewaretoken)
 
         Log.wtf("URL Called", call.request().url().toString() + "")
 

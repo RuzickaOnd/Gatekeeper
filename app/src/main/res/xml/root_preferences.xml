@@ -1,5 +1,6 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/credentials_header"
         app:summary="@string/credentials_summary">
@@ -22,6 +23,9 @@
             app:key="passShow"
             app:title="@string/passShow_title"
             app:useSimpleSummaryProvider="true" />
+        <Preference
+            app:key="clearSession"
+            app:title="@string/clearSession_title"/>
 
     </PreferenceCategory>
 

@@ -1,6 +1,7 @@
 <component name="ProjectDictionaryState">
   <dictionary name="ruzicka">
     <words>
+      <w>csfr</w>
       <w>csrf</w>
       <w>csrfmiddlewaretoken</w>
       <w>csrftoken</w>
