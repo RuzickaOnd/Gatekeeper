@@ -166,6 +166,8 @@ class GateService {
 
                 val code = response.code()
 
+//                println(message = "Before (request): "+ response.raw().priorResponse()?.body())
+
                 when {
                     response.isSuccessful || code==302 -> {
 

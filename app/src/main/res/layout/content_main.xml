@@ -16,7 +16,9 @@
         android:layout_height="100dp"
         android:layout_margin="20dp"
         android:layout_gravity="center"
-        android:text="@string/gate_1" />
+        android:text="@string/gate_1"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corners"/>
 
     <Button
         android:id="@+id/button_gate_two"
@@ -24,6 +26,8 @@
         android:layout_height="100dp"
         android:layout_margin="20dp"
         android:layout_gravity="center"
-        android:text="@string/gate_2" />
+        android:text="@string/gate_2"
+        android:textColor="@color/colorPrimaryDark"
+        android:background="@drawable/rounded_corners"/>
 
 </LinearLayout>

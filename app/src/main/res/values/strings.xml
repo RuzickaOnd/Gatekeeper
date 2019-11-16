@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Gatekeeper</string>
     <string name="action_settings">Settings</string>
-    <string name="title">GateKeeper</string>
+    <string name="title">Gatekeeper</string>
     <string name="gate_1">Gate 1</string>
     <string name="gate_2">Gate 2</string>
     <string name="title_activity_settings">Settings</string>
