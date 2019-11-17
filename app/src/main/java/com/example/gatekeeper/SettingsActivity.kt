@@ -36,16 +36,17 @@ class SettingsActivity : AppCompatActivity() {
 
             val sharedPreference = SharedPreference(this.requireContext())
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
-                if(s == "username"){
-                    println(message = "Changed preferences: $s")
-                    sharedPreference.removeValue("sessionid")
-                }else if(s == "password"){
-                    println(message = "Changed preferences: $s")
-                    sharedPreference.removeValue("sessionid")
-                }else{
-                    println(message = "Changed preferences: $s")
+                when (s) {
+                    "username" -> {
+                        println(message = "Changed preferences: $s")
+                        sharedPreference.removeValue("sessionid")
+                    }
+                    "password" -> {
+                        println(message = "Changed preferences: $s")
+                        sharedPreference.removeValue("sessionid")
+                    }
+                    else -> println(message = "Changed preferences: $s")
                 }
-                val gs = GateService()
             }
         }
 
