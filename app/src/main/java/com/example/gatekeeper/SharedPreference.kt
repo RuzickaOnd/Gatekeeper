@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 
 class SharedPreference(private val context: Context) {
 
-    private val PREFS_NAME = "gatekeeperSharedPrefs"
-    val sharedPref: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val prefsName = "gatekeeperSharedPrefs"
+    private val sharedPref: SharedPreferences = context.getSharedPreferences(prefsName, Context.MODE_PRIVATE)
 
     fun save(KEY_NAME: String, text: String) {
 
@@ -46,7 +46,7 @@ class SharedPreference(private val context: Context) {
         return sharedPref.getInt(KEY_NAME, 0)
     }
 
-    fun getValueBoolien(KEY_NAME: String, defaultValue: Boolean): Boolean {
+    fun getValueBoolean(KEY_NAME: String, defaultValue: Boolean): Boolean {
 
         return sharedPref.getBoolean(KEY_NAME, defaultValue)
 

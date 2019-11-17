@@ -8,7 +8,6 @@
 
     <!-- Preference Titles -->
     <string name="credentials_header">Credentials</string>
-    <string name="sync_header">Sync</string>
 
     <!-- Credentials Preferences -->
     <string name="credentials_summary">Credentials for login to Gatekeeper</string>
