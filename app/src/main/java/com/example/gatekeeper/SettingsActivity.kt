@@ -29,13 +29,25 @@ class SettingsActivity : AppCompatActivity() {
             val passPref = findPreference<EditTextPreference>("password")
             passPref?.summary = toStars(passPref?.text?:getString(R.string.not_set))
             passPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
-                //println( "Pref " + preference.key + " changed to " + newValue.toString())
+                println("Pref " + preference.key + " changed to " + newValue.toString())
                 preference.summary = toStars(newValue.toString())
                 true
             }
 
+            val sharedPreference = SharedPreference(this.requireContext())
+            preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
+                if(s == "username"){
+                    println(message = "Changed preferences: $s")
+                    sharedPreference.removeValue("sessionid")
+                }else if(s == "password"){
+                    println(message = "Changed preferences: $s")
+                    sharedPreference.removeValue("sessionid")
+                }else{
+                    println(message = "Changed preferences: $s")
+                }
+                val gs = GateService()
+            }
         }
-
 
 
         private fun toStars(text: String): String {
@@ -61,8 +73,8 @@ class SettingsActivity : AppCompatActivity() {
                     builder.setMessage("Are you want to clear current session?")
                     builder.setPositiveButton("Yes"){dialog, which ->
                         val sharedPreference = SharedPreference(this.requireContext())
-                        sharedPreference.clearSharedPreference()
-                        Snackbar.make(this.requireView(),"Clear session ...", Snackbar.LENGTH_SHORT).show()
+                        sharedPreference.removeValue("sessionid")
+                        Snackbar.make(this.requireView(),"Clearing session ...", Snackbar.LENGTH_SHORT).show()
                     }
                     builder.setNegativeButton("No"){dialog,which ->
                     }

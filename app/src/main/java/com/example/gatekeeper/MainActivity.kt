@@ -24,14 +24,10 @@ class MainActivity : AppCompatActivity() {
         gs.openGate(0,findViewById(android.R.id.content), this)
 
         button_gate_one.setOnClickListener{
-            //val gs = GateService()
-            Snackbar.make(it,"Call Gate no.1",Snackbar.LENGTH_SHORT).show()
             gs.openGate(1, it, this)
         }
 
         button_gate_two.setOnClickListener{
-            //val gs = GateService()
-            Snackbar.make(it,"Call Gate no.2",Snackbar.LENGTH_SHORT).show()
             gs.openGate(2, it, this)
         }
 

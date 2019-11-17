@@ -21,9 +21,10 @@ class GateService {
 
     fun openGate(number: Int, rootView : View, context : Context){
 
-        val gate = Gate(number)
-
         val sharedPreference = SharedPreference(context)
+
+        val gate = Gate(number)
+        Snackbar.make(rootView,"Call Gate no.$number",Snackbar.LENGTH_SHORT).show()
 
         val service = RetrofitInstance.getRetrofitService()
 
@@ -151,6 +152,12 @@ class GateService {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val username = prefs.getString("username","") ?: ""
         val password = prefs.getString("password","") ?: ""
+
+        if(username.isEmpty() || password.isEmpty()){
+            Snackbar.make(rootView,"Username or password is empty!", Snackbar.LENGTH_INDEFINITE).show()
+            return
+        }
+
         val call = service.postLoginFormData(csrftoken,username,password,csrfmiddlewaretoken)
 
         Log.wtf("URL Called", call.request().url().toString() + "")
@@ -166,10 +173,11 @@ class GateService {
 
                 val code = response.code()
 
-//                println(message = "Before (request): "+ response.raw().priorResponse()?.body())
-
                 when {
-                    response.isSuccessful || code==302 -> {
+                    response.isSuccessful -> {
+                        Snackbar.make(rootView,"Login Failed!", Snackbar.LENGTH_INDEFINITE).show()
+                    }
+                    code==302 -> {
 
                         println(message = "Status code: $code")
 
@@ -184,7 +192,9 @@ class GateService {
                                 println("Save sessionid pref: $s")
                                 sharedPreference.save(sessionId,s)
 
-                                if(s.isNotEmpty()) Snackbar.make(rootView,"Login Success", Snackbar.LENGTH_SHORT).show()
+                                if(s.isNotEmpty()){
+                                    Snackbar.make(rootView,"Login Success", Snackbar.LENGTH_LONG).show()
+                                }
                             }
                             if(it.contains("csrftoken=")){
                                 val c = it.split(";")[0]
@@ -196,7 +206,7 @@ class GateService {
                     }
                     else -> {
                         println(message = "Status code $code")
-                        Snackbar.make(rootView,"Status code $code => Login Failed", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(rootView,"Status code $code => Login Failed", Snackbar.LENGTH_LONG).show()
                     }
                 }
 
