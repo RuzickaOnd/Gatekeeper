@@ -14,7 +14,23 @@
     <string name="username_title">Username</string>
     <string name="password_title">Password</string>
     <string name="clearSession_title">Clear session</string>
+    <string name="clearSession_question">Are you want to clear current session?</string>
     <string name="show_password">Show password</string>
     <string name="not_set">Not set</string>
+    <string name="clearingSession">Clearing session ...</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="call_gate_no">Call Gate no.</string>
+    <string name="status_code">Status code</string>
+    <string name="login_failed">Login Failed</string>
+    <string name="login_success">Login Success</string>
+    <string name="username_password_empty">Username or password is empty</string>
+    <string name="forbidden" translatable="false">Forbidden</string>
+    <string name="bad_request" translatable="false">Bad request</string>
+    <string name="authorization_failed">Authorization Failed</string>
+    <string name="trying_again">trying again</string>
+    <string name="no_returned_message">No returned message</string>
+    <string name="service_communication_error">Service communication error</string>
+    <string name="authorization_success">Authorization Success</string>
 
 </resources>

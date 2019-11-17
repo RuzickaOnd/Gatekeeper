@@ -24,7 +24,6 @@ class GateService {
         val sharedPreference = SharedPreference(context)
 
         val gate = Gate(number)
-        Snackbar.make(rootView,"Call Gate no.$number",Snackbar.LENGTH_SHORT).show()
 
         val service = RetrofitInstance.getRetrofitService()
 
@@ -37,7 +36,7 @@ class GateService {
         call.enqueue(object : Callback<String>{
             override fun onFailure(call: Call<String>, t: Throwable) {
                 println(message = "Error: "+t.message + "; cause: " + t.cause)
-                Snackbar.make(rootView,"Service communication error!", Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(rootView,context.resources.getString(R.string.service_communication_error), Snackbar.LENGTH_SHORT).show()
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -48,30 +47,30 @@ class GateService {
                     response.isSuccessful -> {
                         if(number>0){
                             println(message = "Response: "+response.body())
-                            Snackbar.make(rootView,response.body()?:"No returned message (status $code)", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(rootView,response.body()?:context.resources.getString(R.string.no_returned_message)+" ("+context.resources.getString(R.string.status_code)+" "+code+")", Snackbar.LENGTH_SHORT).show()
                         }else{
                             println(message = "Authorization Success")
-                            Snackbar.make(rootView,"Authorization Success", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(rootView,context.resources.getString(R.string.authorization_success), Snackbar.LENGTH_SHORT).show()
                         }
                     }
                     code==403 -> {
                         if(number>0){
                             println(message = "Status code $code (Forbidden) ... trying again")
-                            Snackbar.make(rootView,"Status code $code (Forbidden)", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code+" ("+context.resources.getString(R.string.forbidden)+")", Snackbar.LENGTH_SHORT).show()
                         }else{
                             println(message = "Authorization Failed")
-                            Snackbar.make(rootView,"Authorization Failed ... trying again", Snackbar.LENGTH_SHORT).show()
+                            Snackbar.make(rootView,context.resources.getString(R.string.authorization_failed)+" ... "+context.resources.getString(R.string.trying_again), Snackbar.LENGTH_SHORT).show()
                         }
                         //retry login
                         getCsrfTokenFromGate(rootView, context)
                     }
                     code==400 -> {
                         println(message = "Status code $code (Bad request)")
-                        Snackbar.make(rootView,"Status code $code (Bad request)", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code+" ("+context.resources.getString(R.string.bad_request)+")", Snackbar.LENGTH_SHORT).show()
                     }
                     else -> {
                         println(message = "Status code $code")
-                        Snackbar.make(rootView,"Status code $code", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code, Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
@@ -100,7 +99,7 @@ class GateService {
                 when {
                     response.isSuccessful -> {
 
-                        println(message = "Status code: $code")
+                        println(message = context.resources.getString(R.string.status_code)+" "+code)
 
                         //get csrftoken
                         var inputCsrfToken =""
@@ -133,11 +132,11 @@ class GateService {
                     }
                     code==403 -> {
                         println(message = "Status code $code (Forbidden)")
-                        Snackbar.make(rootView,"Status code $code (Forbidden)", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code+" ("+context.resources.getString(R.string.forbidden)+")", Snackbar.LENGTH_SHORT).show()
                     }
                     else -> {
                         println(message = "Status code $code")
-                        Snackbar.make(rootView,"Status code $code", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code, Snackbar.LENGTH_SHORT).show()
                     }
                 }
 
@@ -154,7 +153,7 @@ class GateService {
         val password = prefs.getString("password","") ?: ""
 
         if(username.isEmpty() || password.isEmpty()){
-            Snackbar.make(rootView,"Username or password is empty!", Snackbar.LENGTH_INDEFINITE).show()
+            Snackbar.make(rootView,context.resources.getString(R.string.username_password_empty), Snackbar.LENGTH_INDEFINITE).show()
             return
         }
 
@@ -175,7 +174,7 @@ class GateService {
 
                 when {
                     response.isSuccessful -> {
-                        Snackbar.make(rootView,"Login Failed!", Snackbar.LENGTH_INDEFINITE).show()
+                        Snackbar.make(rootView,context.resources.getString(R.string.login_failed), Snackbar.LENGTH_INDEFINITE).show()
                     }
                     code==302 -> {
 
@@ -193,7 +192,7 @@ class GateService {
                                 sharedPreference.save(sessionId,s)
 
                                 if(s.isNotEmpty()){
-                                    Snackbar.make(rootView,"Login Success", Snackbar.LENGTH_LONG).show()
+                                    Snackbar.make(rootView,context.resources.getString(R.string.login_success), Snackbar.LENGTH_LONG).show()
                                 }
                             }
                             if(it.contains("csrftoken=")){
@@ -205,8 +204,9 @@ class GateService {
 
                     }
                     else -> {
-                        println(message = "Status code $code")
-                        Snackbar.make(rootView,"Status code $code => Login Failed", Snackbar.LENGTH_LONG).show()
+
+                        println(message = context.resources.getString(R.string.status_code)+" "+code)
+                        Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code+" => "+context.resources.getString(R.string.login_failed), Snackbar.LENGTH_LONG).show()
                     }
                 }
 

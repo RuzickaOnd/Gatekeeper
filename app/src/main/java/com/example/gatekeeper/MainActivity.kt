@@ -18,17 +18,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.setTitle(R.string.title)
+        supportActionBar?.title = getString(R.string.title)
 
         val gs = GateService()
         gs.openGate(0,findViewById(android.R.id.content), this)
 
         button_gate_one.setOnClickListener{
             gs.openGate(1, it, this)
+            Snackbar.make(it,getString(R.string.call_gate_no)+"1",Snackbar.LENGTH_SHORT).show()
         }
 
         button_gate_two.setOnClickListener{
             gs.openGate(2, it, this)
+            Snackbar.make(it,getString(R.string.call_gate_no)+"2",Snackbar.LENGTH_SHORT).show()
         }
 
     }

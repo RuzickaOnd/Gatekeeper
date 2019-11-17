@@ -70,14 +70,14 @@ class SettingsActivity : AppCompatActivity() {
                 preference?.key.equals("clearSession") -> {
 
                     val builder = AlertDialog.Builder(this.requireContext())
-                    builder.setTitle("Clear session")
-                    builder.setMessage("Are you want to clear current session?")
-                    builder.setPositiveButton("Yes"){dialog, which ->
+                    builder.setTitle(getString(R.string.clearSession_title))
+                    builder.setMessage(getString(R.string.clearSession_question))
+                    builder.setPositiveButton(getString(R.string.yes)){dialog, which ->
                         val sharedPreference = SharedPreference(this.requireContext())
                         sharedPreference.removeValue("sessionid")
-                        Snackbar.make(this.requireView(),"Clearing session ...", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(this.requireView(),getString(R.string.clearingSession), Snackbar.LENGTH_SHORT).show()
                     }
-                    builder.setNegativeButton("No"){dialog,which ->
+                    builder.setNegativeButton(getString(R.string.no)){dialog,which ->
                     }
                     val dialog: AlertDialog = builder.create()
                     dialog.show()

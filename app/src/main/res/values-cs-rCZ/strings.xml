@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Gatekeeper</string>
+    <string name="action_settings">Nastavení</string>
+    <string name="clearSession_title">Smazat session</string>
+    <string name="credentials_header">Přihlašovací údaje</string>
+    <string name="credentials_summary">Údaje pro přihlášení k apliaci Gatekeeper</string>
+    <string name="gate_1">Brána 1</string>
+    <string name="gate_2">Brána 2</string>
+    <string name="not_set">Nenastaveno</string>
+    <string name="password_title">Heslo</string>
+    <string name="show_password">Zobrazovat heslo</string>
+    <string name="title">Gatekeeper</string>
+    <string name="title_activity_settings">Nastavení</string>
+    <string name="username_title">Uživatelské jméno</string>
+    <string name="clearSession_question">Opravdu chcete smazat aktuální session?</string>
+    <string name="clearingSession">Mazání session ...</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+    <string name="call_gate_no">Volání brány č.</string>
+    <string name="status_code">Stavový kód</string>
+    <string name="login_failed">Přihlášení selhalo</string>
+    <string name="login_success">Přihlášení proběhlo úspěšně</string>
+    <string name="username_password_empty">Uživatelské jméno nebo heslo není vyplněno</string>
+    <string name="authorization_failed">Autorizace selhala</string>
+    <string name="trying_again">zkouším znovu</string>
+    <string name="no_returned_message">Žádná odpověď</string>
+    <string name="service_communication_error">Chyba komunikace služby</string>
+    <string name="authorization_success">Autorizace úspěšná</string>
+</resources>
