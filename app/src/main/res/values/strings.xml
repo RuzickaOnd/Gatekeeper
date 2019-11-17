@@ -14,12 +14,8 @@
     <string name="credentials_summary">Credentials for login to Gatekeeper</string>
     <string name="username_title">Username</string>
     <string name="password_title">Password</string>
-    <string name="passShow_title">Show password</string>
     <string name="clearSession_title">Clear session</string>
+    <string name="show_password">Show password</string>
+    <string name="not_set">Not set</string>
 
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
 </resources>
