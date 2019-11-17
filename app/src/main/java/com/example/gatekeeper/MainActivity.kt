@@ -2,13 +2,16 @@ package com.example.gatekeeper
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.CompoundButton
 import com.google.android.material.snackbar.Snackbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.preference_pass_edit_text.*
 
 
 class MainActivity : AppCompatActivity() {

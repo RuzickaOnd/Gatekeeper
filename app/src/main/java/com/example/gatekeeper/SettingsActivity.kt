@@ -19,7 +19,16 @@ class SettingsActivity : AppCompatActivity() {
             .replace(R.id.settings, SettingsFragment())
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
+/*
+        val chbPassShow = findViewById<CheckBox>(R.id.checkBox_show_password)
+        chbPassShow.setOnCheckedChangeListener { compoundButton, b ->
+            if(b){
+                edit.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+            }else{
+                edit.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
+*/
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
