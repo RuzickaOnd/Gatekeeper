@@ -1,12 +1,21 @@
 <resources>
     <!-- Reply Preference -->
     <string-array name="passShow_entries">
-        <item>Ano</item>
-        <item>Ne</item>
+        <item>@string/yes</item>
+        <item>@string/no</item>
     </string-array>
 
     <string-array name="passShow_values">
         <item>true</item>
         <item>false</item>
+    </string-array>
+
+    <string-array name="themes_entries">
+        <item>@string/theme_magenta</item>
+        <item>@string/theme_blue</item>
+    </string-array>
+    <string-array name="themes_values">
+        <item>AppTheme</item>
+        <item>AppTheme2</item>
     </string-array>
 </resources>

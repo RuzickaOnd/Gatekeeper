@@ -4,28 +4,41 @@ import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.EditTextPreference
+import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.material.snackbar.Snackbar
 
 class SettingsActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val sharedPreference = SharedPreference(context = applicationContext)
+        when (sharedPreference.getValueString("theme")) {
+            "AppTheme" -> setTheme(R.style.AppTheme)
+            "AppTheme2" -> setTheme(R.style.AppTheme2)
+            else -> {
+            }
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.settings, SettingsFragment())
             .commit()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
 /*
-        val chbPassShow = findViewById<CheckBox>(R.id.checkBox_show_password)
+        val chbPassShow = findViewById<CheckBox>(R.id.checkbox)
         chbPassShow.setOnCheckedChangeListener { compoundButton, b ->
             if(b){
-                edit.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                //edit.inputType = InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                println(message = "checkbox: $b")
             }else{
-                edit.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                //edit.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+                println(message = "checkbox: $b")
             }
         }
 */
@@ -43,18 +56,28 @@ class SettingsActivity : AppCompatActivity() {
                 true
             }
 
+            val themePref = findPreference<ListPreference>("theme")
+            themePref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+                println("Pref " + preference.key + " changed to " + newValue.toString())
+                val sharedPreference = SharedPreference(requireContext())
+                sharedPreference.save("theme",newValue.toString())
+                activity?.recreate()
+
+                true
+            }
+
             val sharedPreference = SharedPreference(this.requireContext())
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
+                println(message = "Changed preferences: $s")
                 when (s) {
                     "username" -> {
-                        println(message = "Changed preferences: $s")
                         sharedPreference.removeValue("sessionid")
                     }
                     "password" -> {
-                        println(message = "Changed preferences: $s")
                         sharedPreference.removeValue("sessionid")
                     }
-                    else -> println(message = "Changed preferences: $s")
+                    else -> {
+                    }
                 }
             }
         }

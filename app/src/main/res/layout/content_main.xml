@@ -17,7 +17,7 @@
         android:layout_margin="20dp"
         android:layout_gravity="center"
         android:text="@string/gate_1"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         android:background="@drawable/rounded_corners"/>
 
     <Button
@@ -27,7 +27,7 @@
         android:layout_margin="20dp"
         android:layout_gravity="center"
         android:text="@string/gate_2"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="?attr/colorPrimaryDark"
         android:background="@drawable/rounded_corners"/>
 
 </LinearLayout>

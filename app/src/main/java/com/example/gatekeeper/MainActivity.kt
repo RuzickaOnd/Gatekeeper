@@ -2,21 +2,35 @@ package com.example.gatekeeper
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.InputType
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.CompoundButton
 import com.google.android.material.snackbar.Snackbar
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.preference_pass_edit_text.*
 
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        val sharedPreference = SharedPreference(context = applicationContext)
+        when (sharedPreference.getValueString("theme")) {
+            "AppTheme" -> {
+                setTheme(R.style.AppTheme)
+                setTheme(R.style.AppTheme_NoActionBar)
+            }
+            "AppTheme2" -> {
+                setTheme(R.style.AppTheme2)
+                setTheme(R.style.AppTheme2_NoActionBar)
+            }
+            else -> {
+                setTheme(R.style.AppTheme)
+                setTheme(R.style.AppTheme_NoActionBar)
+            }
+        }
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)

@@ -27,4 +27,9 @@
     <string name="no_returned_message">Žádná odpověď</string>
     <string name="service_communication_error">Chyba komunikace služby</string>
     <string name="authorization_success">Autorizace úspěšná</string>
+    <string name="personalization_header">Personalizace</string>
+    <string name="personalization_summary">Uživatelské přizpůsobení aplikace</string>
+    <string name="theme_title">Téma</string>
+    <string name="theme_blue">Téma Modrá</string>
+    <string name="theme_magenta">Téma Magenta</string>
 </resources>

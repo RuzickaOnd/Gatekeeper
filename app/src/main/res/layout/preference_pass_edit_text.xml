@@ -15,7 +15,7 @@
         android:layout_marginEnd="21dp"/>
 <!--
     <CheckBox
-        android:id="@+id/checkBox_show_password"
+        android:id="@android:id/checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
