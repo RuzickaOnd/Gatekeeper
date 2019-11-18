@@ -21,7 +21,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        supportActionBar?.title = getString(R.string.title)
+//        supportActionBar?.title = getString(R.string.title)
+//        supportActionBar?.setDisplayUseLogoEnabled(true)
 
         val gs = GateService()
         gs.openGate(0,findViewById(android.R.id.content), this)

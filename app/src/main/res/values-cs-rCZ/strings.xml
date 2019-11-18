@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Gatekeeper</string>
     <string name="action_settings">Nastavení</string>
-    <string name="clearSession_title">Smazat session</string>
+    <string name="clearSession_title">Smazat relaci</string>
     <string name="credentials_header">Přihlašovací údaje</string>
     <string name="credentials_summary">Údaje pro přihlášení k apliaci Gatekeeper</string>
     <string name="gate_1">Brána 1</string>
@@ -13,8 +13,8 @@
     <string name="title">Gatekeeper</string>
     <string name="title_activity_settings">Nastavení</string>
     <string name="username_title">Uživatelské jméno</string>
-    <string name="clearSession_question">Opravdu chcete smazat aktuální session?</string>
-    <string name="clearingSession">Mazání session ...</string>
+    <string name="clearSession_question">Opravdu chcete smazat aktuální relaci?</string>
+    <string name="clearingSession">Mazání relace ...</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="call_gate_no">Volání brány č.</string>
