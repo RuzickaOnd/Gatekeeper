@@ -38,5 +38,6 @@
     <string name="theme_title">Theme</string>
     <string name="theme_magenta">Theme Magenta</string>
     <string name="theme_blue">Theme Blue</string>
+    <string name="theme_grey">Theme Grey</string>
 
 </resources>

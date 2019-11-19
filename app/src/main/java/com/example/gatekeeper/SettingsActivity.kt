@@ -17,6 +17,7 @@ class SettingsActivity : AppCompatActivity() {
         when (sharedPreference.getValueString("theme")) {
             "AppTheme" -> setTheme(R.style.AppTheme)
             "AppTheme2" -> setTheme(R.style.AppTheme2)
+            "AppTheme3" -> setTheme(R.style.AppTheme3)
             else -> {
             }
         }

@@ -32,4 +32,5 @@
     <string name="theme_title">Téma</string>
     <string name="theme_blue">Téma Modrá</string>
     <string name="theme_magenta">Téma Magenta</string>
+    <string name="theme_grey">Téma Šedá</string>
 </resources>

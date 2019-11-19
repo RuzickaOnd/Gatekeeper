@@ -12,4 +12,9 @@
     <color name="colorPrimaryDark2">#3700B3</color>
     <color name="colorAccent2">#BB86FC</color>
     <color name="colorBackground2">@android:color/white</color>
+
+    <color name="colorPrimary3">#424242</color>
+    <color name="colorPrimaryDark3">#212121</color>
+    <color name="colorAccent3">#757575</color>
+    <color name="colorBackground3">@android:color/darker_gray</color>
 </resources>

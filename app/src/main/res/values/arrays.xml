@@ -13,9 +13,11 @@
     <string-array name="themes_entries">
         <item>@string/theme_magenta</item>
         <item>@string/theme_blue</item>
+        <item>@string/theme_grey</item>
     </string-array>
     <string-array name="themes_values">
         <item>AppTheme</item>
         <item>AppTheme2</item>
+        <item>AppTheme3</item>
     </string-array>
 </resources>

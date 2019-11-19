@@ -25,6 +25,10 @@ class MainActivity : AppCompatActivity() {
                 setTheme(R.style.AppTheme2)
                 setTheme(R.style.AppTheme2_NoActionBar)
             }
+            "AppTheme3" -> {
+                setTheme(R.style.AppTheme3)
+                setTheme(R.style.AppTheme3_NoActionBar)
+            }
             else -> {
                 setTheme(R.style.AppTheme)
                 setTheme(R.style.AppTheme_NoActionBar)
