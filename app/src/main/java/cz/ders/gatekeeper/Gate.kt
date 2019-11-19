@@ -1,4 +1,4 @@
-package com.example.gatekeeper
+package cz.ders.gatekeeper
 
 import com.google.gson.annotations.SerializedName
 

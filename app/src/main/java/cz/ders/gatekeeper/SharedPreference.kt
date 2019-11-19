@@ -1,4 +1,4 @@
-package com.example.gatekeeper
+package cz.ders.gatekeeper
 
 import android.content.Context
 import android.content.SharedPreferences

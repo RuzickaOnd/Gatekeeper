@@ -1,4 +1,4 @@
-package com.example.gatekeeper
+package cz.ders.gatekeeper
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -13,7 +13,8 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val sharedPreference = SharedPreference(context = applicationContext)
+        val sharedPreference =
+            SharedPreference(context = applicationContext)
         when (sharedPreference.getValueString("theme")) {
             "AppTheme" -> setTheme(R.style.AppTheme)
             "AppTheme2" -> setTheme(R.style.AppTheme2)
@@ -28,7 +29,10 @@ class SettingsActivity : AppCompatActivity() {
 
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
+            .replace(
+                R.id.settings,
+                SettingsFragment()
+            )
             .commit()
 
 /*
@@ -60,14 +64,16 @@ class SettingsActivity : AppCompatActivity() {
             val themePref = findPreference<ListPreference>("theme")
             themePref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
                 println("Pref " + preference.key + " changed to " + newValue.toString())
-                val sharedPreference = SharedPreference(requireContext())
+                val sharedPreference =
+                    SharedPreference(requireContext())
                 sharedPreference.save("theme",newValue.toString())
                 activity?.recreate()
 
                 true
             }
 
-            val sharedPreference = SharedPreference(this.requireContext())
+            val sharedPreference =
+                SharedPreference(this.requireContext())
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
                 println(message = "Changed preferences: $s")
                 when (s) {
@@ -105,12 +111,13 @@ class SettingsActivity : AppCompatActivity() {
                     val builder = AlertDialog.Builder(this.requireContext())
                     builder.setTitle(getString(R.string.clearSession_title))
                     builder.setMessage(getString(R.string.clearSession_question))
-                    builder.setPositiveButton(getString(R.string.yes)){dialog, which ->
-                        val sharedPreference = SharedPreference(this.requireContext())
+                    builder.setPositiveButton(getString(R.string.yes)){ dialog, which ->
+                        val sharedPreference =
+                            SharedPreference(this.requireContext())
                         sharedPreference.removeValue("sessionid")
                         Snackbar.make(this.requireView(),getString(R.string.clearingSession), Snackbar.LENGTH_SHORT).show()
                     }
-                    builder.setNegativeButton(getString(R.string.no)){dialog,which ->
+                    builder.setNegativeButton(getString(R.string.no)){ dialog, which ->
                     }
                     val dialog: AlertDialog = builder.create()
                     dialog.show()

@@ -1,4 +1,4 @@
-package com.example.gatekeeper
+package cz.ders.gatekeeper
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

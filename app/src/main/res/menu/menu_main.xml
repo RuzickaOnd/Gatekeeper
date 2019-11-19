@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.gatekeeper.MainActivity">
+    tools:context="com.example.gatekeeper.cz.example.gatekeeper.MainActivity">
     <item
         android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_settings"

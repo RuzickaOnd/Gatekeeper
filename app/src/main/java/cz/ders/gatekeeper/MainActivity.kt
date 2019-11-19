@@ -1,4 +1,4 @@
-package com.example.gatekeeper
+package cz.ders.gatekeeper
 
 import android.content.Intent
 import android.os.Bundle
@@ -15,7 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val sharedPreference = SharedPreference(context = applicationContext)
+        val sharedPreference =
+            SharedPreference(context = applicationContext)
         when (sharedPreference.getValueString("theme")) {
             "AppTheme" -> {
                 setTheme(R.style.AppTheme)
@@ -69,7 +70,8 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                val intent = Intent(this,SettingsActivity::class.java)
+                val intent = Intent(this,
+                    SettingsActivity::class.java)
                 startActivity(intent)
                 true
             }
