@@ -21,9 +21,7 @@ public class RetrofitInstance {
                     .setLenient()
                     .serializeNulls()
                     .create();
-//            OkHttpClient client = new OkHttpClient.Builder().build(); //new OkHttpClient();
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            //builder.followRedirects(false);
             OkHttpClient client = builder.build();
 
 
