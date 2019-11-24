@@ -20,6 +20,18 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/network_header"
+        app:summary="@string/network_summary">
+
+        <EditTextPreference
+            app:key="url"
+            app:title="@string/url_title"
+            app:useSimpleSummaryProvider="true"
+            app:defaultValue="https://"
+            app:dialogMessage="URL format: https://example.ders.cz/"/>
+
+    </PreferenceCategory>
+
     <PreferenceCategory app:title="@string/personalization_header"
         app:summary="@string/personalization_summary">
 
@@ -31,6 +43,12 @@
             app:title="@string/theme_title"
             app:useSimpleSummaryProvider="true" />
 
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            app:key="about"
+            app:title="@string/about_title"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

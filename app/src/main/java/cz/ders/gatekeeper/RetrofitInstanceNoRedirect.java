@@ -11,7 +11,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitInstanceNoRedirect {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://gatekeeper.ders.cz/";
+    private static String BASE_URL ; //= "https://gatekeeper.ders.cz/"
     private static RestApiService service;
 
     public static Retrofit getRetrofitInstanceNoRedirect() {
@@ -37,7 +37,8 @@ public class RetrofitInstanceNoRedirect {
         return retrofit;
     }
 
-    public static RestApiService getRetrofitService(){
+    public static RestApiService getRetrofitService(String url){
+        BASE_URL = url;
         service = RetrofitInstanceNoRedirect.getRetrofitInstanceNoRedirect().create(RestApiService.class);
         return service;
     }

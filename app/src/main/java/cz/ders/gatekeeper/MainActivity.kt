@@ -15,8 +15,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val sharedPreference =
-            SharedPreference(context = applicationContext)
+        val sharedPreference = SharedPreference(context = applicationContext)
+
         when (sharedPreference.getValueString("theme")) {
             "AppTheme" -> {
                 setTheme(R.style.AppTheme)
@@ -29,6 +29,10 @@ class MainActivity : AppCompatActivity() {
             "AppTheme3" -> {
                 setTheme(R.style.AppTheme3)
                 setTheme(R.style.AppTheme3_NoActionBar)
+            }
+            "AppTheme4" -> {
+                setTheme(R.style.AppTheme4)
+                setTheme(R.style.AppTheme4_NoActionBar)
             }
             else -> {
                 setTheme(R.style.AppTheme)

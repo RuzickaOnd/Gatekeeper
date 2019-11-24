@@ -2,7 +2,9 @@ package cz.ders.gatekeeper
 
 import android.content.Context
 import android.util.Log
+import android.util.Patterns
 import android.view.View
+import android.webkit.URLUtil
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
 import okhttp3.Headers
@@ -18,14 +20,25 @@ class GateService {
     val csfrToken = "csrftoken"
     val csrfMiddlewareToken = "csrfmiddlewaretoken"
     val sessionId = "sessionid"
+    private var url = ""
 
     fun openGate(number: Int, rootView : View, context : Context){
 
         val sharedPreference = SharedPreference(context)
 
+        url = sharedPreference.getValueString("url").toString()
+        if(URLUtil.isValidUrl(url) and url.isNotEmpty() and url.isNotBlank() and Patterns.WEB_URL.matcher(url).matches()){
+            println(message = "URL valid: $url")
+        }else{
+            Snackbar.make(rootView,context.resources.getString(R.string.url_error), Snackbar.LENGTH_INDEFINITE).show()
+            sharedPreference.removeValue("url")
+            println(message = "URL invalid: $url")
+            return
+        }
+
         val gate = Gate(number)
 
-        val service = RetrofitInstance.getRetrofitService()
+        val service = RetrofitInstance.getRetrofitService(url)
 
         val call = service.postGateNumber(sharedPreference.getValueString(sessionId).toString(),gate)
 
@@ -36,7 +49,7 @@ class GateService {
         call.enqueue(object : Callback<String>{
             override fun onFailure(call: Call<String>, t: Throwable) {
                 println(message = "Error: "+t.message + "; cause: " + t.cause)
-                Snackbar.make(rootView,context.resources.getString(R.string.service_communication_error), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(rootView,context.resources.getString(R.string.service_communication_error), Snackbar.LENGTH_INDEFINITE).show()
             }
 
             override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -88,7 +101,7 @@ class GateService {
     }
 
     fun getCsrfTokenFromGate(rootView : View, context : Context){
-        val service = RetrofitInstance.getRetrofitService()
+        val service = RetrofitInstance.getRetrofitService(url)
         val call = service.getGateTarget()
 
         Log.wtf("URL Called", call.request().url().toString() + "")
@@ -158,7 +171,7 @@ class GateService {
 
     fun login(rootView : View, context : Context, csrfmiddlewaretoken : String, csrftoken : String){
         val service =
-            RetrofitInstanceNoRedirect.getRetrofitService()
+            RetrofitInstanceNoRedirect.getRetrofitService(url)
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         val username = prefs.getString("username","") ?: ""
@@ -169,7 +182,8 @@ class GateService {
             return
         }
 
-        val call = service.postLoginFormData(csrftoken,username,password,csrfmiddlewaretoken)
+        val referer = "$url/accounts/login/"
+        val call = service.postLoginFormData(referer,csrftoken,username,password,csrfmiddlewaretoken)
 
         Log.wtf("URL Called", call.request().url().toString() + "")
 
@@ -223,7 +237,7 @@ class GateService {
                         println(message = context.resources.getString(R.string.status_code)+" "+code)
                         Snackbar.make(rootView,context.resources.getString(R.string.status_code)+" "+code+" => "+context.resources.getString(
                             R.string.login_failed
-                        ), Snackbar.LENGTH_LONG).show()
+                        ), Snackbar.LENGTH_INDEFINITE).show()
                     }
                 }
 

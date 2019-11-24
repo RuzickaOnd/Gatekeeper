@@ -20,7 +20,7 @@
     <string name="clearSession_question">Are you want to clear current session?</string>
     <string name="show_password">Show password</string>
     <string name="not_set">Not set</string>
-    <string name="clearingSession">Clearing session ...</string>
+    <string name="clearingSession">Clearing session …</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="call_gate_no">Call Gate no.</string>
@@ -39,5 +39,17 @@
     <string name="theme_magenta">Theme Magenta</string>
     <string name="theme_blue">Theme Blue</string>
     <string name="theme_grey">Theme Grey</string>
+    <string name="theme_green">Theme Green</string>
+    <string name="network_header">Network</string>
+    <string name="network_summary">Network configuration</string>
+    <string name="url_title" translatable="false">URL</string>
+    <string name="url_error">Není zadána správná URL</string>
+    <string name="about_title">About</string>
+    <string name="about_message">Gatekeeper is an application for opening enter gates on company parking.</string>
+    <string name="close">Close</string>
+    <string name="about_author">author:</string>
+    <string name="about_author_name" translatable="false">Ondřej Růžička</string>
+    <string name="company_name" translatable="false">Ders s.r.o.</string>
+    <string name="about_for">for</string>
 
 </resources>

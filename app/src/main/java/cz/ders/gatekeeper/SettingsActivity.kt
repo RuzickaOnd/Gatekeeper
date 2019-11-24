@@ -19,6 +19,7 @@ class SettingsActivity : AppCompatActivity() {
             "AppTheme" -> setTheme(R.style.AppTheme)
             "AppTheme2" -> setTheme(R.style.AppTheme2)
             "AppTheme3" -> setTheme(R.style.AppTheme3)
+            "AppTheme4" -> setTheme(R.style.AppTheme4)
             else -> {
             }
         }
@@ -52,6 +53,7 @@ class SettingsActivity : AppCompatActivity() {
     class SettingsFragment : PreferenceFragmentCompat() {
         override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey)
+            val sharedPreference = SharedPreference(requireContext())
 
             val passPref = findPreference<EditTextPreference>("password")
             passPref?.summary = toStars(passPref?.text?:getString(R.string.not_set))
@@ -64,16 +66,19 @@ class SettingsActivity : AppCompatActivity() {
             val themePref = findPreference<ListPreference>("theme")
             themePref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
                 println("Pref " + preference.key + " changed to " + newValue.toString())
-                val sharedPreference =
-                    SharedPreference(requireContext())
                 sharedPreference.save("theme",newValue.toString())
                 activity?.recreate()
 
                 true
             }
 
-            val sharedPreference =
-                SharedPreference(this.requireContext())
+            val urlPref = findPreference<EditTextPreference>("url")
+            urlPref?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { preference, newValue ->
+                println("Pref " + preference.key + " changed to " + newValue.toString())
+                sharedPreference.save("url",newValue.toString())
+                true
+            }
+
             preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
                 println(message = "Changed preferences: $s")
                 when (s) {
@@ -117,8 +122,15 @@ class SettingsActivity : AppCompatActivity() {
                         sharedPreference.removeValue("sessionid")
                         Snackbar.make(this.requireView(),getString(R.string.clearingSession), Snackbar.LENGTH_SHORT).show()
                     }
-                    builder.setNegativeButton(getString(R.string.no)){ dialog, which ->
-                    }
+                    builder.setNegativeButton(getString(R.string.no),null)
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
+                }
+                preference?.key.equals("about") -> {
+                    val builder = AlertDialog.Builder(this.requireContext())
+                    builder.setTitle(getString(R.string.about_title))
+                    builder.setView(R.layout.dialog_about)
+                    builder.setNeutralButton(getString(R.string.close),null)
                     val dialog: AlertDialog = builder.create()
                     dialog.show()
                 }

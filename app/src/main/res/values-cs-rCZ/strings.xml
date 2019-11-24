@@ -14,7 +14,7 @@
     <string name="title_activity_settings">Nastavení</string>
     <string name="username_title">Uživatelské jméno</string>
     <string name="clearSession_question">Opravdu chcete smazat aktuální relaci?</string>
-    <string name="clearingSession">Mazání relace ...</string>
+    <string name="clearingSession">Mazání relace …</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="call_gate_no">Volání brány č.</string>
@@ -33,4 +33,13 @@
     <string name="theme_blue">Téma Modrá</string>
     <string name="theme_magenta">Téma Magenta</string>
     <string name="theme_grey">Téma Šedá</string>
+    <string name="theme_green">Téma Zelená</string>
+    <string name="network_header">Síť</string>
+    <string name="network_summary">Nastavení sítě</string>
+    <string name="url_error">URL is incorrect or is not set</string>
+    <string name="about_title">O aplikaci</string>
+    <string name="about_message">Gatekeeper je aplikace pro otevírání vjezdových bran na firemní parkoviště.</string>
+    <string name="close">Zavřít</string>
+    <string name="about_author">autor:</string>
+    <string name="about_for">pro</string>
 </resources>

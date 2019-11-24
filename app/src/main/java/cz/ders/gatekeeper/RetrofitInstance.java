@@ -11,10 +11,12 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitInstance {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://gatekeeper.ders.cz/";
+    private static String BASE_URL ; //= "https://gatekeeper.ders.cz/"
     private static RestApiService service;
 
     public static Retrofit getRetrofitInstance() {
+
+
 
         if (retrofit == null) {
             Gson gson = new GsonBuilder()
@@ -35,7 +37,8 @@ public class RetrofitInstance {
         return retrofit;
     }
 
-    public static RestApiService getRetrofitService(){
+    public static RestApiService getRetrofitService(String url){
+        BASE_URL = url;
         service = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
         return service;
     }
